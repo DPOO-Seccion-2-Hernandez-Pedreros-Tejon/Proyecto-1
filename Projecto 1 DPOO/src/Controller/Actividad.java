@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Actividad 
 {
 	public String nombre;
+	public Participante miembro;
 	public String tipo;
 	public String fecha;
 	public String horaInicio;
@@ -38,22 +39,26 @@ public class Actividad
 	public boolean isFinalizada() {
 		return finalizada;
 	}
-	public String[] getFechasPausa() {
+	public ArrayList<String> getFechasPausa() {
 		return fechasPausa;
 	}
-	public String[] getFechasReanudar() {
+	public ArrayList<String> getFechasReanudar() {
 		return fechasReanudar;
 	}
-	public Actividad(String nombre, String tipo, String fecha, String horaInicio, String horaFinal, String descripcion) 
+	public Actividad(String nombre, String tipo, String fecha, 
+			String horaInicio, String descripcion, Participante miembro) 
 	{
 		this.nombre = nombre;
 		this.tipo = tipo;
 		this.fecha = fecha;
 		this.horaInicio = horaInicio;
-		this.horaFinal = horaFinal;
+		this.fechasReanudar = new ArrayList<String>();
+		this.fechasPausa = new ArrayList<String>();
+		this.fechasReanudar.add(fecha);
 		this.descripcion = descripcion;
 		this.tiempoUsado = 0;
 		this.finalizada = false;
+		this.miembro = miembro;
 	}
 	
 	public void finalizarActividad(Actividad actividad)

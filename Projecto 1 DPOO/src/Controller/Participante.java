@@ -9,11 +9,17 @@ public class Participante {
 	public float tiempoProm;
 	public float tiempoDia;
 	public ArrayList<Actividad> actividadesParticipante;
-	public ArrayList<Proyecto> protectosParticipante;
+	public ArrayList<Proyecto> proyectosParticipante;
 	public int numActividades;
 	
 	
 	
+	public ArrayList<Actividad> getActividadesParticipante() {
+		return actividadesParticipante;
+	}
+	public ArrayList<Proyecto> getProyectosParticipante() {
+		return proyectosParticipante;
+	}
 	public int getNumActividades() {
 		return numActividades;
 	}
@@ -59,6 +65,8 @@ public class Participante {
 	{
 		this.nombre = nombre;
 		this.correo = correo;
+		this.actividadesParticipante = new ArrayList<Actividad>();
+		this.proyectosParticipante = new ArrayList<Proyecto>();
 	}
 	
 	public void actualizarInfo()
@@ -66,15 +74,6 @@ public class Participante {
 		
 	}
 	
-	public Proyecto[] darProyectosParticipante()
-	{
-		
-	}
-	
-	public Actividad[] darActividadesParticipante()
-	{
-	
-	}
 	
 	public Reporte darReporte(){
 		{
@@ -83,16 +82,10 @@ public class Participante {
 		}
 	}
 	
-	public void subirActividad(String nombre, String tipo, String fecha, String horaInicio, String horaFinal, String descripcion, String tiempoUsado)
-	{
-		Actividad actividad = new Actividad(nombre, tipo, fecha, horaInicio, horaFinal, descripcion);
-		actividadesParticipante.add(actividad);
-		
-	}
 	
 	public void pausarCronometro(Actividad actividad, String fecha)
 	{
-		Actividad.
+		
 	}
 	
 	

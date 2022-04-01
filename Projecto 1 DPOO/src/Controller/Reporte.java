@@ -5,22 +5,22 @@ public class Reporte
 	public float tiempoTotal;
 	public float tiempoProm;
 	public float tiempoDia;
-	public String getTiempoTotal() {
+	public float getTiempoTotal() {
 		return tiempoTotal;
 	}
-	public void setTiempoTotal(String tiempoTotal) {
+	public void setTiempoTotal(float tiempoTotal) {
 		this.tiempoTotal = tiempoTotal;
 	}
-	public String getTiempoProm() {
+	public float getTiempoProm() {
 		return tiempoProm;
 	}
-	public void setTiempoProm(String tiempoProm) {
+	public void setTiempoProm(float tiempoProm) {
 		this.tiempoProm = tiempoProm;
 	}
-	public String getTiempoDia() {
+	public float getTiempoDia() {
 		return tiempoDia;
 	}
-	public void setTiempoDia(String tiempoDia) {
+	public void setTiempoDia(float tiempoDia) {
 		this.tiempoDia = tiempoDia;
 	}
 	
