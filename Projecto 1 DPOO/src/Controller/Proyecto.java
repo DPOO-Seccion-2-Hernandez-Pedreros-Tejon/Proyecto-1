@@ -30,6 +30,10 @@ public class Proyecto {
 	public ArrayList<Participante> getMiembros() {
 		return miembros;
 	}
+	public ArrayList<Actividad> getActividades() {
+		return actividades;
+	}
+	
 
 	public Proyecto(String nombre, String descripcion, String fechaInicio, 
 			String fechaEstimada, Participante duenio) 
@@ -48,26 +52,6 @@ public class Proyecto {
 	public void actualizarInfo()
 	{
 		
-	}
-	
-	public String darNombre() 
-	{
-		return this.nombre;
-	}
-	
-	public String darDescripcion() 
-	{
-		return this.descripcion;
-	}
-
-	public String darFechaInicio() 
-	{
-		return this.fechaInicio;
-	}
-	
-	public String darFechaEstimada() 
-	{
-		return this.fechaEstimada;
 	}
 	
 

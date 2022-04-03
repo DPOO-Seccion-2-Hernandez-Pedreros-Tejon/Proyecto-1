@@ -3,11 +3,11 @@ package Controller;
 import java.util.ArrayList;
 
 public class Participante {
-	public String nombre;
-	public String correo;
-	public float tiempoTotal;
-	public float tiempoProm;
-	public float tiempoDia;
+	private String nombre;
+	private String correo;
+	private float tiempoTotal;
+	private float tiempoProm;
+	private float tiempoDia;
 	public ArrayList<Actividad> actividadesParticipante;
 	public ArrayList<Proyecto> proyectosParticipante;
 	public int numActividades;

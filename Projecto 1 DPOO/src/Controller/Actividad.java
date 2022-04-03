@@ -39,12 +39,34 @@ public class Actividad
 	public boolean isFinalizada() {
 		return finalizada;
 	}
+	public Participante getMiembro() {
+		return miembro;
+	}
+	public void setMiembro(Participante miembro) {
+		this.miembro = miembro;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+	public void setHoraInicio(String horaInicio) {
+		this.horaInicio = horaInicio;
+	}
+	public void setHoraFinal(String horaFinal) {
+		this.horaFinal = horaFinal;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 	public ArrayList<String> getFechasPausa() {
 		return fechasPausa;
 	}
 	public ArrayList<String> getFechasReanudar() {
 		return fechasReanudar;
 	}
+	
 	public Actividad(String nombre, String tipo, String fecha, 
 			String horaInicio, String descripcion, Participante miembro) 
 	{
