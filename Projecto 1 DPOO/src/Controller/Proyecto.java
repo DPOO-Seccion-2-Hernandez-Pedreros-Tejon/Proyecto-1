@@ -1,8 +1,9 @@
 package Controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Proyecto {
+public class Proyecto implements Serializable{
 	
 	public String nombre;	
 	public String descripcion;	
@@ -46,13 +47,6 @@ public class Proyecto {
 		this.miembros = new ArrayList<Participante>();
 		this.actividades = new ArrayList<Actividad>();
 		this.miembros.add(duenio);
-		
-	}
-
-	public void actualizarInfo()
-	{
-		
-	}
-	
+	}	
 
 }

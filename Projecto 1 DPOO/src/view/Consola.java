@@ -20,9 +20,8 @@ public class Consola {
 	
 	public static void cargarDatosM() throws PersistenciaException
 	{
-		
-		String archivoProyectos = "./data/datosProyectos";
-		String archivoUsuarios = "./data/datosUsuarios";
+		String archivoProyectos = "datosProyectos";
+		String archivoUsuarios = "datosUsuarios";
 		manejadorProyectos = new ManejadorProyectos(usuarioActual, archivoProyectos, archivoUsuarios);
 		cargarProyectos();
 		cargarUsuarios();
@@ -89,6 +88,8 @@ public class Consola {
 					manejadorProyectos.proyectosCargados.add(proyectoActual);
 				
 					manejadorProyectos.proyectoActual = proyectoActual;
+					
+					manejadorProyectos.salvarDatos();
 				
 					mostrarMenuProyecto(proyectoActual);
 				}
@@ -159,7 +160,7 @@ public class Consola {
 					+ "\n FECHA DE INICIO: " + proyectoActual.getFechaInicio()
 					+ "\n FECHA ESTIMADA DE FINALIZACIÓN: " + proyectoActual.getFechaEstimada()
 					+ "\n DUEÑO: " + proyectoActual.getDuenio().getNombre()
-					+ "\n PARTICIPANTES: " + proyectoActual.getDuenio().getNombre()
+					+ "\n PARTICIPANTES: " + stringMiembros
 					+ "\n \nElige una de las opciones: \n "
 					+ "1. Subir una nueva actividad \n "
 					+ "2. Ver las actividades \n 0. Volver\nOpción"));
@@ -189,10 +190,23 @@ public class Consola {
 							horaInicio,descripcion, usuario);
 					proyectoActual.actividades.add(actividad);
 					usuario.actividadesParticipante.add(actividad);
+					boolean anadir = true;
+					for (Participante o: proyectoActual.getMiembros())
+					{
+						if (usuario.getNombre().equals(o.getNombre()))
+						{
+							anadir = false;
+						}
+					}
+					if (anadir)
+					{
+						proyectoActual.getMiembros().add(usuario); 
+					}
 					int last = proyectoActual.actividades.size() - 1;
 					proyectoActual.actividades.get(last).finalizada = false;
 					proyectoActual.actividades.get(last).fechasPausa.add(getCurrentDate());
 					proyectoActual.actividades.get(last).horaFinal = getCurrentHour();
+					manejadorProyectos.salvarDatos();
 					//usuarioActual.actividadesParticipante.add(proyectoActual.actividades.get(last));
 					System.out.println("La actividad " + actividad.nombre 
 							+ " ha sido finalizada en la fecha " + getCurrentDate()
@@ -216,9 +230,10 @@ public class Consola {
 					{
 						Actividad actividad = new Actividad(nombre,tipo,fechaInicio,				
 								horaInicio,descripcion, usuario);
-					
+						proyectoActual.getMiembros().add(usuario);
 						proyectoActual.actividades.add(actividad);
 						usuario.actividadesParticipante.add(actividad);
+						manejadorProyectos.salvarDatos();
 						System.out.println("La actividad " + actividad.nombre 
 								+ " ha sido finalizada en la fecha " + getCurrentDate()
 								+ " a las " + getCurrentHour());
@@ -273,7 +288,7 @@ public class Consola {
 		}
 	}
 	
-	public void modificarActividad (int no, Proyecto proyectoActual)
+	public void modificarActividad (int no, Proyecto proyectoActual) throws PersistenciaException
 	{
 		Actividad actividad = proyectoActual.actividades.get(no);
 		int opcion = Integer.parseInt(input("Escoja el campo a modificar: "
@@ -314,7 +329,7 @@ public class Consola {
 			actividad.setHoraFinal(valor);
 			System.out.println("Se modificó la actividad con éxito.");	
 		}
-		
+		manejadorProyectos.salvarDatos();
 	}
 	
 	public static String input(String mensaje)
@@ -390,6 +405,7 @@ public class Consola {
 			{
 				usuarioActual = new Participante(nombre, correo);
 				manejadorProyectos.usuarios.add(usuarioActual);
+				manejadorProyectos.salvarDatos();
 				Consola consola = new Consola();
 				consola.mostrarMenuInicio();
 			}

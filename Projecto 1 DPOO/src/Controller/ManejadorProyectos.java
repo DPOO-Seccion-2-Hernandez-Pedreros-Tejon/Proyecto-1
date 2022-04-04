@@ -8,15 +8,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ManejadorProyectos {
+public class ManejadorProyectos implements Serializable{
 	public Participante usuarioActual;
 	public ArrayList<Proyecto> proyectosCargados;
 	public Proyecto proyectoActual;
 	public ArrayList<Participante> usuarios;
-	private static final String LOG_FILE = "./data/error.log";
+	private static final String LOG_FILE = "error.log";
 	private String archivoProyectos;
 	private String archivoUsuarios;
 	
@@ -111,7 +112,7 @@ public class ManejadorProyectos {
 	public void cargarUsuarios() throws PersistenciaException
 	{
 		//Cargar Usuarios
-		    File archivo = new File( archivoUsuarios );
+		   File archivo = new File( archivoUsuarios );
 		   if( archivo.exists( ) )
 		   {
 		       // El archivo existe: se debe recuperar de allí el estado del modelo del mundo
@@ -182,8 +183,4 @@ public class ManejadorProyectos {
             e.printStackTrace( );
         }
     }
-
-	
-	
-	
 }

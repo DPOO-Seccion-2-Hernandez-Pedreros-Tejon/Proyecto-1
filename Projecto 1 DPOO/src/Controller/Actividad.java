@@ -1,8 +1,9 @@
 package Controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Actividad 
+public class Actividad implements Serializable 
 {
 	public String nombre;
 	public Participante miembro;

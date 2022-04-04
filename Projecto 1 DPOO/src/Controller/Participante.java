@@ -1,8 +1,9 @@
 package Controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Participante {
+public class Participante implements Serializable{
 	private String nombre;
 	private String correo;
 	private float tiempoTotal;
