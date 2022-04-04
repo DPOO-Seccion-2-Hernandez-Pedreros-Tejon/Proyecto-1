@@ -40,7 +40,7 @@ public class Participante implements Serializable{
 	public void setTiempoProm(float tiempoActividad) {
 		if (getNumActividades() != 0)
 		{
-			this.tiempoProm = ((this.tiempoProm + tiempoActividad/getNumActividades())*getNumActividades())/getNumActividades()+1;
+			this.tiempoProm = ((this.tiempoProm + tiempoActividad/getNumActividades())*getNumActividades())/(getNumActividades()+1);
 		}
 		else
 		{
