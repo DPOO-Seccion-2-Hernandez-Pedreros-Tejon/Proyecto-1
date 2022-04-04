@@ -46,7 +46,13 @@ public class Consola {
 		{
 			try
 			{
-				int opcion_seleccionada = Integer.parseInt(input("Bienvenid@ " + usuarioActual.getNombre() + ", Elige una de las opciones: \n 1. Abrir un proyecto antiguo \n 2. Crear un nuevo proyecto \n 4. Cambiar usuario \n 0. Salir \n Opción"));
+				int opcion_seleccionada = Integer.parseInt(input("Bienvenid@ " + usuarioActual.getNombre() 
+				+ ", Elige una de las opciones: \n "
+				+ "1. Abrir un proyecto antiguo \n "
+				+ "2. Crear un nuevo proyecto \n "
+				+ "3. Dar reporte usuario \n "
+				+ "4. Cambiar usuario \n 0. "
+				+ "Salir \n Opción"));
 				if (opcion_seleccionada == 1) 
 				{
 					ArrayList<Proyecto> proyectosP = manejadorProyectos.proyectosCargados;
@@ -93,6 +99,27 @@ public class Consola {
 				
 					mostrarMenuProyecto(proyectoActual);
 				}
+				else if (opcion_seleccionada == 3) 
+				{
+					String usuario = input("Ingresa el nombre del usuario");
+					for (Participante o: manejadorProyectos.usuarios)
+					{
+						if (usuario.equals(o.getNombre()))
+						{
+							System.out.println();
+							System.out.println("EL usuario " 
+										+ o.getNombre()
+										+ " ha trabajado un tiempo total de "
+										+ o.getTiempoTotal()
+										+ " y ha invertido en promedio"
+										+ " por actividad un tiempo de "
+										+ o.getTiempoProm());
+						}
+					}
+					
+				}
+				
+					
 				else if (opcion_seleccionada == 4) 
 				{
 					iniciarSesion();
@@ -108,7 +135,7 @@ public class Consola {
 			}
 			catch (Exception e)
 			{
-				System.out.println("Ha habido un error leyendo el input D:");
+				System.out.println("Ha habido un error leyendo el input :c ");
 				e.printStackTrace();
 			}
 		}
@@ -134,6 +161,8 @@ public class Consola {
 	{
 		
 	}
+	
+	
 	
 	public void cambiarUsuario()
 	{

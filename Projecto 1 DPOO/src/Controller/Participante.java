@@ -6,9 +6,9 @@ import java.util.ArrayList;
 public class Participante implements Serializable{
 	private String nombre;
 	private String correo;
-	private float tiempoTotal;
-	private float tiempoProm;
-	private float tiempoDia;
+	private float tiempoTotal = 0;
+	private float tiempoProm = 0;
+	private float tiempoDia = 0;
 	public ArrayList<Actividad> actividadesParticipante;
 	public ArrayList<Proyecto> proyectosParticipante;
 	public int numActividades;
@@ -27,9 +27,7 @@ public class Participante implements Serializable{
 	public void sumarActividad() {
 		this.numActividades += 1;
 	}
-	public void setTiempoTotal(float tiempoTotal) {
-		this.tiempoTotal = tiempoTotal;
-	}
+
 	public float getTiempoTotal() {
 		return tiempoTotal;
 	}
