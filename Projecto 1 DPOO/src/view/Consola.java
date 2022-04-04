@@ -4,7 +4,7 @@ import Controller.ManejadorProyectos;
 import Controller.Participante;
 import Controller.PersistenciaException;
 import Controller.Proyecto;
-
+import Controller.Cronometro;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -52,7 +52,7 @@ public class Consola {
 				+ "2. Crear un nuevo proyecto \n "
 				+ "3. Dar reporte usuario \n "
 				+ "4. Cambiar usuario \n 0. "
-				+ "Salir \n Opción"));
+				+ "Salir \n OpciÃ³n"));
 				if (opcion_seleccionada == 1) 
 				{
 					ArrayList<Proyecto> proyectosP = manejadorProyectos.proyectosCargados;
@@ -68,7 +68,7 @@ public class Consola {
 							i ++;
 						}
 					
-						int inputP =  Integer.parseInt(input("Elige el número proyecto que deseas abrir"));
+						int inputP =  Integer.parseInt(input("Elige el nÃºmero proyecto que deseas abrir"));
 					
 						Proyecto proyectoActual = proyectosP.get(inputP - 1);
 						manejadorProyectos.proyectoActual = proyectoActual;
@@ -76,18 +76,18 @@ public class Consola {
 					}
 					else
 					{
-						System.out.println("No hay ningún proyecto cargado.\n");
+						System.out.println("No hay ningÃºn proyecto cargado.\n");
 					}
 				}
 				else if (opcion_seleccionada == 2) 
 				{	
 					String nombre = input("Ingresa el nombre de tu nuevo proyecto");
 				
-					String descripcion = input("Escribe una breve descripción de tu nuevo proyecto");
+					String descripcion = input("Escribe una breve descripciÃ³n de tu nuevo proyecto");
 				
 					String fechaInicio = getCurrentDate();
 				
-					String fechaEstimada = input("Ingresa la fecha estimada de finalización del proyecto en formato dd/MM/yyyy");
+					String fechaEstimada = input("Ingresa la fecha estimada de finalizaciÃ³n del proyecto en formato dd/MM/yyyy");
 
 					Proyecto proyectoActual = new Proyecto(nombre, descripcion, fechaInicio, fechaEstimada, usuarioActual);
 				
@@ -128,7 +128,7 @@ public class Consola {
 				}
 				else if (opcion_seleccionada == 0) 
 				{
-					System.out.println("Sesión cerrada.");
+					System.out.println("SesiÃ³n cerrada.");
 					seguir = false;
 				}
 				
@@ -183,23 +183,23 @@ public class Consola {
 			stringMiembros += " )";
 			
 			int opcion_seleccionada = Integer.parseInt(input(
-					"INFORMACIÓN DEL PROYECTO: \n"
+					"INFORMACIÃ“N DEL PROYECTO: \n"
 					+ "NOMBRE: " + proyectoActual.getNombre()
-					+ "\n DESCRIPCIÓN: " + proyectoActual.getDescripcion()
+					+ "\n DESCRIPCIÃ“N: " + proyectoActual.getDescripcion()
 					+ "\n FECHA DE INICIO: " + proyectoActual.getFechaInicio()
-					+ "\n FECHA ESTIMADA DE FINALIZACIÓN: " + proyectoActual.getFechaEstimada()
-					+ "\n DUEÑO: " + proyectoActual.getDuenio().getNombre()
+					+ "\n FECHA ESTIMADA DE FINALIZACIÃ“N: " + proyectoActual.getFechaEstimada()
+					+ "\n DUEÃ‘O: " + proyectoActual.getDuenio().getNombre()
 					+ "\n PARTICIPANTES: " + stringMiembros
 					+ "\n \nElige una de las opciones: \n "
 					+ "1. Subir una nueva actividad \n "
-					+ "2. Ver las actividades \n 0. Volver\nOpción"));
+					+ "2. Ver las actividades \n 0. Volver\nOpciÃ³n"));
 			if (opcion_seleccionada == 1) 
 			{
 				String nombre = input("Ingresa el nombre de tu nueva actividad");
 				
 				String tipo = input("Ingresa el tipo de tu nueva actividad");
 				
-				String descripcion = input("Ingresa una descripción para tu nueva actividad");
+				String descripcion = input("Ingresa una descripciÃ³n para tu nueva actividad");
 				
 				String fechaInicio = getCurrentDate();
 				
@@ -209,33 +209,68 @@ public class Consola {
 				
 				
 				int opcion_selec = Integer.parseInt(input(
-						"¿Desea cambiar el realizador de la actividad?\n"
+						"Â¿Desea cambiar el realizador de la actividad?\n"
 						+ "1. No.\n"
-						+ "2. Sí.\n Opción"));
+						+ "2. SÃ­.\n OpciÃ³n"));
 				
 				if (opcion_selec == 1)
 				{
 					Actividad actividad = new Actividad(nombre,tipo,fechaInicio,				
 							horaInicio,descripcion, usuario);
+					
+					
+					
 					proyectoActual.actividades.add(actividad);
 					usuario.actividadesParticipante.add(actividad);
-					boolean anadir = true;
-					for (Participante o: proyectoActual.getMiembros())
-					{
-						if (usuario.getNombre().equals(o.getNombre()))
-						{
-							anadir = false;
-						}
-					}
-					if (anadir)
-					{
-						proyectoActual.getMiembros().add(usuario); 
-					}
 					int last = proyectoActual.actividades.size() - 1;
 					proyectoActual.actividades.get(last).finalizada = false;
+					
+					long begin = System.currentTimeMillis();
+					long end = System.currentTimeMillis();
+					Cronometro cronometro = new Cronometro(begin, end);
+					cronometro.start();
+					
+					String estado = "C";
+					do {
+						
+						int continuar = Integer.parseInt(Consola.input(
+								"Â¿QuÃ© desea que haga el cronÃ³metro?, "
+								+ "Â¿Desea pausarlo, que siga corriendo o finalizar la actividad?"
+								+ " \n1. Pausar \n2. Seguir corriendo \n3. Finalizar la actividad\n"));
+						if (continuar == 1 && estado.equals("C"))
+						{
+							cronometro.stop();
+							estado = "P";
+							System.out.println("El cronÃ³metro se ha detenido");
+						}
+						else if (continuar == 1 && estado.equals("P"))
+						{
+							System.out.println("El cronÃ³metro ya estÃ¡ detenido");
+							
+						}
+						else if (continuar == 2 && estado.equals("P")) 
+						{
+							cronometro.start();
+							System.out.println("El cronÃ³metro seguirÃ¡ corriendo...");
+						}
+						else if (continuar == 2 && estado.equals("C")) 
+						{
+							System.out.println("El cronÃ³metro ya estÃ¡ corriendo");
+						}
+						else if (continuar == 3) 
+						{
+							if (estado.equals("C")) {
+								cronometro.stop();
+							}	
+							
+							actividad.finalizarActividad(actividad, cronometro.getTotal());
+						}
+					} while (actividad.finalizada == false);
+					manejadorProyectos.salvarDatos();
+					System.out.println("La actividad se demorÃ³: " + cronometro.getTotal() + " segundos");
+					
 					proyectoActual.actividades.get(last).fechasPausa.add(getCurrentDate());
 					proyectoActual.actividades.get(last).horaFinal = getCurrentHour();
-					manejadorProyectos.salvarDatos();
 					//usuarioActual.actividadesParticipante.add(proyectoActual.actividades.get(last));
 					System.out.println("La actividad " + actividad.nombre 
 							+ " ha sido finalizada en la fecha " + getCurrentDate()
@@ -259,10 +294,54 @@ public class Consola {
 					{
 						Actividad actividad = new Actividad(nombre,tipo,fechaInicio,				
 								horaInicio,descripcion, usuario);
-						proyectoActual.getMiembros().add(usuario);
+						
+						long begin = System.currentTimeMillis();
+						long end = System.currentTimeMillis();
+						Cronometro cronometro = new Cronometro(begin, end);
+						cronometro.start();
+						
+						String estado = "C";
+						do {
+							
+							int continuar = Integer.parseInt(Consola.input(
+									"Â¿QuÃ© desea que haga el cronÃ³metro?, "
+									+ "Â¿Desea pausarlo, que siga corriendo o finalizar la actividad?"
+									+ " \n1. Pausar \n2. Seguir corriendo \n3. Finalizar la actividad\n"));
+							if (continuar == 1 && estado.equals("C"))
+							{
+								cronometro.stop();
+								estado = "P";
+								System.out.println("El cronÃ³metro se ha detenido");
+							}
+							else if (continuar == 1 && estado.equals("P"))
+							{
+								System.out.println("El cronÃ³metro ya estÃ¡ detenido");
+								
+							}
+							else if (continuar == 2 && estado.equals("P")) 
+							{
+								cronometro.start();
+								System.out.println("El cronÃ³metro seguirÃ¡ corriendo...");
+							}
+							else if (continuar == 2 && estado.equals("C")) 
+							{
+								System.out.println("El cronÃ³metro ya estÃ¡ corriendo");
+							}
+							else if (continuar == 3) 
+							{
+								if (estado.equals("C")) {
+									cronometro.stop();
+								}	
+								
+								actividad.finalizarActividad(actividad, cronometro.getTotal());
+							}
+						} while (actividad.finalizada == false);
+						manejadorProyectos.salvarDatos();
+						System.out.println("La actividad se demorÃ³: " + cronometro.getTotal() + " segundos");
+						
+						
 						proyectoActual.actividades.add(actividad);
 						usuario.actividadesParticipante.add(actividad);
-						manejadorProyectos.salvarDatos();
 						System.out.println("La actividad " + actividad.nombre 
 								+ " ha sido finalizada en la fecha " + getCurrentDate()
 								+ " a las " + getCurrentHour());
@@ -270,7 +349,7 @@ public class Consola {
 					}
 					else
 					{
-						System.out.println("No se encontró un usuario registrado con ese nombre. No se pudo crear la actividad.");
+						System.out.println("No se encontrï¿½ un usuario registrado con ese nombre. No se pudo crear la actividad.");
 					}
 				}
 			}
@@ -287,16 +366,16 @@ public class Consola {
 						String indice = String.valueOf(i);
 						System.out.println("Actividad " + indice + ".");
 						System.out.println("NOMBRE: " + p.getNombre()
-						+ "\n DESCRIPCIÓN: " + p.getDescripcion()
+						+ "\n DESCRIPCIÃ“N: " + p.getDescripcion()
 						+ "\n TIPO: " + p.getTipo()
-						+ "\n FECHA DE REALIZACIÓN: " + p.getFecha()
+						+ "\n FECHA DE REALIZACIÃ“N: " + p.getFecha()
 						+ "\n HORA DE INICIO: " + p.getHoraInicio()
-						+ "\n HORA DE FINALIZACIÓN: " + p.getHoraFinal()
+						+ "\n HORA DE FINALIZACIÃ“N: " + p.getHoraFinal()
 						+ "\n REALIZADOR: " + p.getMiembro().getNombre() + "\n");
 						i ++;
 					}
 				
-					int inputP =  Integer.parseInt(input("Escoja el número de actividad a modificar (para volver marque 0)"));
+					int inputP =  Integer.parseInt(input("Escoja el nÃºmero de actividad a modificar (para volver marque 0)"));
 					inputP -= 1;
 					if (inputP != (-1))
 					{
@@ -305,7 +384,7 @@ public class Consola {
 				}
 				else
 				{
-					System.out.println("No hay ningúna actividad cargada.\n");
+					System.out.println("No hay ningÃºna actividad cargada.\n");
 				}
 				mostrarMenuProyecto(proyectoActual);
 			}
@@ -321,42 +400,42 @@ public class Consola {
 	{
 		Actividad actividad = proyectoActual.actividades.get(no);
 		int opcion = Integer.parseInt(input("Escoja el campo a modificar: "
-		+ "\n 1. DESCRIPCIÓN "
+		+ "\n 1. DESCRIPCIÃ“N "
 		+ "\n 2. TIPO"
-		+ "\n 3. FECHA DE REALIZACIÓN"
+		+ "\n 3. FECHA DE REALIZACIÃ“N"
 		+ "\n 4. HORA DE INICIO"
-		+ "\n 5. HORA DE FINALIZACIÓN"
-		+ "\n Opción"));
+		+ "\n 5. HORA DE FINALIZACIÃ“N"
+		+ "\n OpciÃ³n"));
 		
 		if (opcion == 1)
 		{
-			String valor = input("Escriba la nueva descripción");
+			String valor = input("Escriba la nueva descripciÃ³n");
 			actividad.setDescripcion(valor);
-			System.out.println("Se modificó la actividad con éxito.");
+			System.out.println("Se modificÃ³ la actividad con Ã©xito.");
 		}
 		else if (opcion == 2)
 		{
 			String valor = input("Escriba el nuevo tipo");
 			actividad.setTipo(valor);
-			System.out.println("Se modificó la actividad con éxito.");	
+			System.out.println("Se modificÃ³ la actividad con Ã©xito.");	
 		}
 		else if (opcion == 3)
 		{
 			String valor = input("Escriba la nueva fecha (dd/mm/yyyy)");
 			actividad.setFecha(valor);
-			System.out.println("Se modificó la actividad con éxito.");	
+			System.out.println("Se modificÃ³ la actividad con Ã©xito.");	
 		}
 		else if (opcion == 4)
 		{
 			String valor = input("Escriba la nueva hora de inicio (hh:mm:ss)");
 			actividad.setHoraInicio(valor);
-			System.out.println("Se modificó la actividad con éxito.");	
+			System.out.println("Se modificÃ³ la actividad con Ã©xito.");	
 		}
 		else if (opcion == 5)
 		{
 			String valor = input("Escriba la nueva hora final (hh:mm:ss)");
 			actividad.setHoraFinal(valor);
-			System.out.println("Se modificó la actividad con éxito.");	
+			System.out.println("Se modificÃ³ la actividad con Ã©xito.");	
 		}
 		manejadorProyectos.salvarDatos();
 	}
@@ -388,8 +467,8 @@ public class Consola {
 	{
 		int opcion_seleccionada = Integer.parseInt(input(
 				"\nElige una de las opciones: \n "
-				+ "1. Iniciar sesión con un usuario existente \n "
-				+ "2. Crear un nuevo usuario \nOpción"));
+				+ "1. Iniciar sesiÃ³n con un usuario existente \n "
+				+ "2. Crear un nuevo usuario \nOpciÃ³n"));
 		if (opcion_seleccionada == 1) 
 		{
 			String nombre = input("Ingrese su nombre de usuario");
@@ -441,7 +520,7 @@ public class Consola {
 		}
 		else
 		{
-			System.out.println("Escoja una opción válida.");
+			System.out.println("Escoja una opciÃ³n vÃ¡lida.");
 		}
 	}
 }

@@ -11,7 +11,7 @@ public class Participante implements Serializable{
 	private float tiempoDia = 0;
 	public ArrayList<Actividad> actividadesParticipante;
 	public ArrayList<Proyecto> proyectosParticipante;
-	public int numActividades;
+	public int numActividades = 0;
 	
 	
 	
@@ -38,7 +38,14 @@ public class Participante implements Serializable{
 		return tiempoProm;
 	}
 	public void setTiempoProm(float tiempoActividad) {
-		this.tiempoProm = (this.tiempoProm + tiempoActividad)/getNumActividades()+1;
+		if (getNumActividades() != 0)
+		{
+			this.tiempoProm = ((this.tiempoProm + tiempoActividad/getNumActividades())*getNumActividades())/getNumActividades()+1;
+		}
+		else
+		{
+			this.tiempoProm = tiempoActividad;
+		}
 		sumarActividad();
 	}
 	public float getTiempoDia() {

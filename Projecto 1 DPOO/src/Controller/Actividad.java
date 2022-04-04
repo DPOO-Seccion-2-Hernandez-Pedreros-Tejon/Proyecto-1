@@ -84,8 +84,9 @@ public class Actividad implements Serializable
 		this.miembro = miembro;
 	}
 	
-	public void finalizarActividad(Actividad actividad)
+	public void finalizarActividad(Actividad actividad, long tiempo)
 	{
+		tiempoUsado = tiempo;
 		actividad.finalizada = true;
 		actividad.miembro.sumarTiempoTotal(actividad.tiempoUsado);
 		actividad.miembro.setTiempoProm(actividad.tiempoUsado);
